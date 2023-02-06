@@ -10,6 +10,7 @@ def test_ranking_length_is_max_2(data_without_headers):
     err = []
     for line in data_without_headers:
         ranking = line.split(',')[0]
+        print(ranking.split())
         if len(ranking) > 2:
             err.append(ranking)
     assert not err

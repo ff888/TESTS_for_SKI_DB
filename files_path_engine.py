@@ -9,6 +9,8 @@ path_to_all_csv_files = glob.glob(path + '/**/*.csv', recursive=True)
 # genders = ['Man', 'Woman']
 # competition_types = ['World Cup', 'Grand Prix', 'World Championship', 'Olympics']
 # ind_or_team = ['Individual', 'Team', 'Mixed']
+
+# single_path = '/Users/pik/Desktop/SKI_DB/Man/Grand Prix/Individual/2005/2005-08-13_Einsiedeln(SUI)_(1989)_GP_LH_M_I.csv'
 #
 
 # def get_list_of_path_files():
