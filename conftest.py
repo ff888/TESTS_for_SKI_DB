@@ -1,12 +1,12 @@
 import pytest
 
-from files_path_engine import get_list_of_path_files
+from files_path_engine import path_to_all_csv_files
 
 
 # load all files for tests
-@pytest.fixture(params=get_list_of_path_files())
+@pytest.fixture(params=path_to_all_csv_files)
 def csv_data(request):
-    """All file elements"""
+    """All file elements - all columns"""
     with open(request.param) as f:
         data = f.read().split('\n')[:-1]
     return data
@@ -14,11 +14,11 @@ def csv_data(request):
 
 @pytest.fixture()
 def headers_from_csv_file(csv_data):
-    """First line in the file -> HEADERS"""
+    """First line in the file -> HEADERS -> top row only"""
     return csv_data[0]
 
 
 @pytest.fixture()
 def data_without_headers(csv_data):
-    """All lines in the file except first line -> HEADERS"""
+    """All lines in the file except first line -> HEADERS -> all rows but no first line"""
     return csv_data[1:]
