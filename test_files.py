@@ -1,12 +1,12 @@
 # tests
 def test_headers_upper(headers_from_csv_file):
-    """Check if column names in header are uppercase"""
+    """Test if column names in header are uppercase"""
     header = headers_from_csv_file
     assert header == header.upper()
 
 
 def test_ranking_length_is_max_2(data_without_headers):
-    """Check if length of ranking column values are max two character long"""
+    """Test if length of ranking column values are max two character long"""
     err = []
     for line in data_without_headers:
         ranking = line.split(',')[0]
@@ -16,7 +16,7 @@ def test_ranking_length_is_max_2(data_without_headers):
 
 
 def test_ranking_is_numerical(data_without_headers):
-    """Check if ranking column holds only numerical values"""
+    """Test check if ranking column holds only numerical values"""
     err = []
     for line in data_without_headers:
         ranking = line.split(',')[0]
@@ -25,7 +25,7 @@ def test_ranking_is_numerical(data_without_headers):
 
 
 def test_name_is_title(data_without_headers):
-    """Check if name column values are title"""
+    """Test if name column values are title"""
     err = []
     for line in data_without_headers:
         name = line.split(',')[1]
@@ -35,7 +35,7 @@ def test_name_is_title(data_without_headers):
 
 
 def test_nationality_upper(data_without_headers):
-    """Check if nationality value is uppercase"""
+    """Test if nationality value is uppercase"""
     err = []
     for line in data_without_headers:
         nationality = line.split(',')[2]
@@ -45,7 +45,7 @@ def test_nationality_upper(data_without_headers):
 
 
 def test_nationality_length_is_3(data_without_headers):
-    """Check if nationality column values are 3 characters long"""
+    """Test if nationality column values are 3 characters long"""
     err = []
     for line in data_without_headers:
         nationality = line.split(',')[2]
@@ -55,7 +55,7 @@ def test_nationality_length_is_3(data_without_headers):
 
 
 def test_dob_list_length(data_without_headers):
-    """Check if DOB column - list has 3 elements, skip NULL value"""
+    """Test if DOB column - list has 3 elements, skip NULL value"""
     err = []
     for line in data_without_headers:
         if line.split(',')[3] == 'NULL':
@@ -68,7 +68,7 @@ def test_dob_list_length(data_without_headers):
 
 
 def test_dob_day(data_without_headers):
-    """Check if DOB column first element (day) length is 1 or 2 character/s long"""
+    """Test if DOB column first element (day) length is 1 or 2 character/s long"""
     err = []
     for line in data_without_headers:
         if line.split(',')[3] == 'NULL':
@@ -81,7 +81,7 @@ def test_dob_day(data_without_headers):
 
 
 def test_dob_month(data_without_headers):
-    """Check if in DOB column the second element is in months list"""
+    """Test if in DOB column the second element is in months list"""
     months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 
     err = []
@@ -96,7 +96,7 @@ def test_dob_month(data_without_headers):
 
 
 def test_dob_year_length(data_without_headers):
-    """Check if length of year element is == 4 (DOB column)"""
+    """Test if length of year element is == 4 (DOB column)"""
     err = []
     for line in data_without_headers:
         if line.split(',')[3] == 'NULL':
@@ -109,7 +109,7 @@ def test_dob_year_length(data_without_headers):
 
 
 def test_club_istitle(data_without_headers):
-    """Check if club column names are title"""
+    """Test if club column names are title"""
     err = []
     for line in data_without_headers:
         if line == 'NULL':
@@ -121,26 +121,47 @@ def test_club_istitle(data_without_headers):
     assert err
 
 
-def test_float_values(data_without_headers):
-    """Check if values are floating point number. For Column:
-    [DISTANCE JUMP 1, DISTANCE POINTS JUMP 1, SPEED JUMP 1, JUDGE MARKS A JUMP 1, JUDGE MARKS B JUMP 1,
-    JUDGE MARKS C JUMP 1, JUDGE MARKS D JUMP 1, JUDGE MARKS E JUMP 1, JUDGE TOTAL POINTS JUMP 1...]
-    """
+def test_judge_marks_max_value(judge_marks):
+    """Test JUDGE MARKS columns (10 in total) to check if values are <= 20.0"""
     err = []
-    extracted_column_data = []
-    for line in data_without_headers:
-        for element in line.split(',')[5:14]:
-            extracted_column_data.append(element)
-        for element in line.split(',')[20:29]:
-            extracted_column_data.append(element)
-        extracted_column_data.append(line.split(',')[33])
-        for element in line.split(',')[35:37]:
-            extracted_column_data.append(element)
-
-    for value in extracted_column_data:
-        if value in ['NULL', 'DNS']:
-            continue
-        else:
-            if '.' not in value:
-                err.append(value)
+    for mark in judge_marks:
+        if float(mark) > 20.0:
+            err.append(mark)
     assert not err
+
+
+def test_judge_marks_isfloat(judge_marks):
+    """Test if values in JUDGE MARKS columns are floating point number type"""
+    err = []
+    for mark in judge_marks:
+        if '.' not in mark:
+            err.append(mark)
+    assert not err
+
+
+def test_rankings_max_length(rankings):
+    """Test if rankings columns are max characters long"""
+    err = []
+    for rank in rankings:
+        if len(rank) > 3:
+            err.append(rank)
+    assert not err
+
+
+def test_rankings_for_numerical_characters_only(rankings):
+    """Test if rankings columns contain only numerical characters"""
+    err = []
+    for rank in rankings:
+        if not rank.isnumeric():
+            err.append(rank)
+    assert not err
+
+
+def test_judge_points_max_value(judge_total_points_columns):
+    """Test if judge marks points values are max 60.0"""
+    err = []
+    for points in judge_total_points_columns:
+        if float(points) > 60.0:
+            err.append(points)
+    assert not err
+
