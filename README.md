@@ -16,7 +16,7 @@ Tests for Ski Jumping Database (pytest) #
  8. Check if fifth column (DOB - Date Of Birth) the first element is max 2 characters long. 
  9. Check if fifth column (DOB - Date Of Birth) the second element is the same as one in the month list.
  10. Check if fifth column (DOB - Date Of Birth) the third element is 4 characters long.
- 11. Check if sixth column (CLUB) contains letters and numbers only.
+ 11. Check if sixth column (CLUB) values are title.
  12. Checks if values are floating point number in given columns.
 
  **Preconditions:**

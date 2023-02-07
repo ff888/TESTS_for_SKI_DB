@@ -108,15 +108,15 @@ def test_dob_year_length(data_without_headers):
     assert not err
 
 
-def test_club_isalnum(data_without_headers):
-    """Check if club column name contains letters and numbers only"""
+def test_club_istitle(data_without_headers):
+    """Check if club column names are title"""
     err = []
     for line in data_without_headers:
         if line == 'NULL':
             continue
 
         club = line.split(',')[4]
-        if not club.isalnum():
+        if not club.istitle():
             err.append(club)
     assert err
 
