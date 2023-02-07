@@ -4,7 +4,7 @@ from files_path_engine import path_to_all_csv_files
 
 
 # load all files for tests
-@pytest.fixture(params=['/Users/pik/Desktop/SKI_DB/Man/Grand Prix/Individual/2005/2005-08-14_Courchevel(FRA)_(1977)_GP_LH_M_I.csv'])
+@pytest.fixture(params=path_to_all_csv_files)
 def csv_data(request):
     """All file elements - all columns"""
     with open(request.param) as f:
