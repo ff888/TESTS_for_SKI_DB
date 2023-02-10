@@ -165,3 +165,48 @@ def test_judge_points_max_value(judge_total_points_columns):
             err.append(points)
     assert not err
 
+
+def test_total_points_float_type(total_points_columns):
+    """Test if total points columns contains float type values.
+    4 columns [TOTAL POINTS JUMP 1, TOTAL POINTS JUMP 2, TOTAL POINTS, TEAM POINTS]"""
+    err = []
+    for points in total_points_columns:
+        if '.' not in points:
+            err.append(points)
+    assert not err
+
+
+def test_speed_float(speed_columns):
+    """Test if speed columns contains float type values. 2 columns [SPEED JUMP 1, SPEED JUMP 2]"""
+    err = []
+    for points in speed_columns:
+        if '.' not in points:
+            err.append(points)
+    assert not err
+
+
+def test_gate_max_2_length(gate_columns):
+    """Test if gate columns are max characters long"""
+    err = []
+    for gate in gate_columns:
+        if len(gate) > 3:
+            err.append(gate)
+    assert not err
+
+
+def test_gate_is_number(gate_columns):
+    """Test if gate columns contain only numerical characters"""
+    err = []
+    for gate in gate_columns:
+        if not gate.isnumeric():
+            err.append(gate)
+    assert not err
+
+
+def test_wind_is_float(wind_columns):
+    """Test if 4 wind columns contain '.' character"""
+    err = []
+    for wind in wind_columns:
+        if '.' not in wind:
+            err.append(wind)
+    assert not err

@@ -22,6 +22,11 @@ Tests for Ski Jumping Database (pytest) #
  14. test_rankings_max_length --> Test if rankings 4 columns are max characters long.
  15. test_rankings_for_numerical_characters_only --> Test if rankings columns contain only numerical characters.
  16. test_judge_points_max_value --> Test if judge marks points columns contain values are max 60.0.
+ 17. test_total_points_float_type --> Test if total points columns contain float type values.
+ 18. test_speed_float --> Test if speed columns contain float type values.
+ 19. test_gate_max_2_length --> Test if gate columns are max values are 2 characters long.
+ 20. test_gate_is_number --> Test if gate values are number type.
+ 21.  test_wind_is_float --> Test if wind columns values contain '.' character.
 
  **Preconditions:**
 

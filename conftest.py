@@ -43,20 +43,18 @@ def judge_marks(data_without_headers):
 
 @pytest.fixture()
 def rankings(data_without_headers):
-    """Return list with values from 4 columns [RANKING, RANKING JUMP 1, RANKING JUMP 2, TOTAL RANKING, TEAM RANKING]"""
+    """Return list with values from 4 columns [RANKING, RANKING JUMP 1, RANKING JUMP 2, TEAM RANKING]"""
 
     rankings_list = []
     for line in data_without_headers:
         ranking = line.split(',')[0]
         ranking_1 = line.split(',')[19]
         ranking_2 = line.split(',')[34]
-        total_ranking = line.split(',')[-4]
         team_ranking = line.split(',')[-1]
 
         rankings_list.append(ranking)
         rankings_list.append(ranking_1)
         rankings_list.append(ranking_2)
-        rankings_list.append(total_ranking)
         rankings_list.append(team_ranking)
 
     rankings_list = [item for item in rankings_list if item != 'NULL' if item != 'DSQ']
@@ -66,7 +64,7 @@ def rankings(data_without_headers):
 
 @pytest.fixture()
 def judge_total_points_columns(data_without_headers):
-    """Data for two columns [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
+    """Return list with values from 2 columns  [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
 
     judge_points_list = []
     for line in data_without_headers:
@@ -80,3 +78,78 @@ def judge_total_points_columns(data_without_headers):
 
     return judge_points_list
 
+
+@pytest.fixture()
+def total_points_columns(data_without_headers):
+    """Return list with values from 4 columns  [TOTAL POINTS JUMP 1, TOTAL POINTS JUMP 2, TOTAL POINTS, TEAM POINTS]"""
+
+    judge_points_list = []
+    for line in data_without_headers:
+        jump_1 = line.split(',')[18]
+        jump_2 = line.split(',')[-10]
+        total = line.split(',')[-3]
+        team = line.split(',')[-5]
+
+        judge_points_list.append(jump_1)
+        judge_points_list.append(jump_2)
+        judge_points_list.append(total)
+        judge_points_list.append(team)
+
+    judge_points_list = [item for item in judge_points_list if item != 'NULL']
+
+    return judge_points_list
+
+
+@pytest.fixture()
+def speed_columns(data_without_headers):
+    """Return list with values from 2 columns  [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
+
+    speed_list = []
+    for line in data_without_headers:
+        speed_1 = line.split(',')[7]
+        speed_2 = line.split(',')[22]
+
+        speed_list.append(speed_1)
+        speed_list.append(speed_2)
+
+    speed_list = [item for item in speed_list if item != 'NULL']
+
+    return speed_list
+
+
+@pytest.fixture()
+def gate_columns(data_without_headers):
+    """Return list with values from 2 columns  [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
+
+    gate_list = []
+    for line in data_without_headers:
+        gate_1 = line.split(',')[14]
+        gate_2 = line.split(',')[29]
+
+        gate_list.append(gate_1)
+        gate_list.append(gate_2)
+
+    gate_list = [item for item in gate_list if item != 'NULL']
+
+    return gate_list
+
+
+@pytest.fixture()
+def wind_columns(data_without_headers):
+    """Return list with values from 4 wind columns"""
+
+    wind_list = []
+    for line in data_without_headers:
+        wind_1 = line.split(',')[16]
+        wind_comp_1 = line.split(',')[17]
+        wind_2 = line.split(',')[31]
+        wind_comp_2 = line.split(',')[32]
+
+        wind_list.append(wind_1)
+        wind_list.append(wind_comp_1)
+        wind_list.append(wind_2)
+        wind_list.append(wind_comp_2)
+
+    wind_list = [item for item in wind_list if item != 'NULL']
+
+    return wind_list
