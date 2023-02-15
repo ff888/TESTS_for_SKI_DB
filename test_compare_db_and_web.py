@@ -1,6 +1,12 @@
-def test_number_of_tournament_in_single_season():
+def test_number_of_competition_in_single_season(db_and_web_competition_data):
     """Test if number of competitions in the season are the same in DB and fis-web"""
-    pass
+    db_count = db_and_web_competition_data[0][1]
+    web_count = db_and_web_competition_data[1][1]
+
+    err = []
+    if db_count != web_count:
+        err.append(db_and_web_competition_data)
+    assert not err
 
 
 def test_compare_number_of_jumpers():

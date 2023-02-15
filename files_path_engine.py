@@ -61,6 +61,7 @@ for i in db_count_competition_single_season(path, seasons):
         competition_category = 'OWG'
     else:
         competition_category = 'GP'
+        season_code = int(season_code) + 1
 
     if i[0].split('/')[7] == 'Individual':
         discipline_code = 'LH,FH,MH,SH,NH'
