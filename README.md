@@ -1,11 +1,11 @@
-Tests for Ski Jumping Database (pytest) #
+Tests for Ski Jumping Database (pytest + selenium) #
 
  **Description:**
 
  The purpose of tests here is to check if fails created by SKI-JUMPING-DATABASE-PROJECT engine holds valid data.
  The structure of DB and file is described in SKI-JUMPING README file.
 
- **There are 11 tests:**
+ **List of file tests:**
  1. test_headers_upper --> Test if first line of the files is line with HEADERS
  2. test_ranking_length_is_max_2 --> Test if second column (RANKING) value are max 2 characters long.
  3. test_ranking_is_numerical --> Test if second column (RANKING) column holds only numerical values
@@ -26,7 +26,10 @@ Tests for Ski Jumping Database (pytest) #
  18. test_speed_float --> Test if speed columns contain float type values.
  19. test_gate_max_2_length --> Test if gate columns are max values are 2 characters long.
  20. test_gate_is_number --> Test if gate values are number type.
- 21.  test_wind_is_float --> Test if wind columns values contain '.' character.
+ 21. test_wind_is_float --> Test if wind columns values contain '.' character.
+
+**List test that compare results from web and DB:**
+1. test_number_of_competition_in_single_season --> Test if number of competitions in the season are the same in DB and fis-web
 
  **Preconditions:**
 

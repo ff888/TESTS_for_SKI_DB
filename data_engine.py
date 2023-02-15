@@ -97,36 +97,3 @@ for i in db_count_competition_single_season(path, seasons):
     web_count = (f'{gender_code}_{competition_category}_{discipline}_{season_code}', competition_count)
 
     db_web_count.append((i, web_count))
-
-# # path elements
-# genders = ['Man', 'Woman']
-# competition_types = ['World Cup', 'Grand Prix', 'World Championship', 'Olympics']
-# ind_or_team = ['Individual', 'Team', 'Mixed']
-
-# single_path = '/Users/pik/Desktop/SKI_DB/Man/Grand Prix/Individual/2005/2005-08-13_Einsiedeln(SUI)_(1989)_GP_LH_M_I.csv'
-#
-
-# def get_list_of_path_files():
-#     """Creates paths for all files in the DB"""
-#     # create a list of paths to all competitions files to test
-#     # path where the >>Ski-Jumping-Database-Project<< database is located
-#
-#     # create a list of paths to each file in SKI_DB
-#     path_competitions_list = []
-#     for gender in genders:
-#         for comp_type in competition_types:
-#             for i in ind_or_team:
-#                 year_paths = glob.glob(f'{path}/{gender}/{comp_type}/{i}/' + '*' + '/')
-#
-#                 for year in year_paths:
-#                     file_full_path = glob.glob('/' + year + '*.csv')
-#
-#                     # if folder empty or not exist skip the empty list
-#                     if len(file_full_path) == 0:
-#                         continue
-#
-#                     path_competitions_list.append(file_full_path)
-#
-#     # create one list with files
-#     path_competitions_list = [item for sub_list in path_competitions_list for item in sub_list]
-#     return path_competitions_list

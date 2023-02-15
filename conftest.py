@@ -1,25 +1,23 @@
 import pytest
 
-from files_path_engine import path_to_all_csv_files, db_web_count
+from data_engine import path_to_all_csv_files, db_web_count
 
 
-# load all files for tests
+########################################################################################################################
+#                                                                                                                      #
+#                                                                                                                      #
+# -------------------------------------------->>> DATA FOR FILES TESTS <<<-------------------------------------------- #
+#                                                                                                                      #
+#                                                                                                                      #
+########################################################################################################################
+
+
 @pytest.fixture(params=path_to_all_csv_files)
 def csv_data(request):
     """All file elements - all columns"""
     with open(request.param) as f:
         data = f.read().split('\n')[:-1]
     return data
-
-
-@pytest.fixture(params=db_web_count)
-def db_and_web_competition_data(request):
-    """Returns list of tuples where it holds 2 tuples:
-        1. (path to the season, number of compilations),
-        2. (link to season, number of compilations
-    """
-    single_db_web_tuple = request.param
-    return single_db_web_tuple
 
 
 @pytest.fixture()
@@ -165,4 +163,20 @@ def wind_columns(data_without_headers):
     return wind_list
 
 
+########################################################################################################################
+#                                                                                                                      #
+#                                                                                                                      #
+# ----------------------------------------->>> DATA FOR DB AND WEB TESTS <<<------------------------------------------ #
+#                                                                                                                      #
+#                                                                                                                      #
+########################################################################################################################
 
+
+@pytest.fixture(params=db_web_count)
+def db_and_web_competition_data(request):
+    """Returns list of tuples where it holds 2 tuples:
+        1. (path to the season, number of compilations),
+        2. (link to season, number of compilations
+    """
+    single_db_web_tuple = request.param
+    return single_db_web_tuple
