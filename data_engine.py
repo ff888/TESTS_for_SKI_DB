@@ -45,55 +45,67 @@ def db_count_competition_single_season(db_path, seasons_list):
     return season_comp_list
 
 
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+def get_db_web_data(season_count_list):
+    """
+    Take information about season from ski db (tape of competition in given season), and use this data to pull
+    information in the fis website.
+    :return: list((db_info, count), (web_info, count))
+    """
+    db_web_count = []
+    for i in season_count_list:
+        season_code = i[0][-5:-1]
 
-db_web_count = []
-for i in db_count_competition_single_season(path, seasons):
-    season_code = i[0][-5:-1]
+        if i[0].split('/')[6] == 'World Cup':
+            competition_category = 'WC'
+        elif i[0].split('/')[6] == 'World Championship':
+            competition_category = 'WSC'
+        elif i[0].split('/')[6] == 'Olympics':
+            competition_category = 'OWG'
+        else:
+            competition_category = 'GP'
+            season_code = int(season_code) + 1
 
-    if i[0].split('/')[6] == 'World Cup':
-        competition_category = 'WC'
-    elif i[0].split('/')[6] == 'World Championship':
-        competition_category = 'WSC'
-    elif i[0].split('/')[6] == 'Olympics':
-        competition_category = 'OWG'
-    else:
-        competition_category = 'GP'
-        season_code = int(season_code) + 1
+        if i[0].split('/')[7] == 'Individual':
+            discipline_code = 'LH,FH,MH,SH,NH'
+            discipline = 'I'
+        else:
+            discipline_code = 'TN,TL,TF,TM,TS'
+            discipline = 'T'
 
-    if i[0].split('/')[7] == 'Individual':
-        discipline_code = 'LH,FH,MH,SH,NH'
-        discipline = 'I'
-    else:
-        discipline_code = 'TN,TL,TF,TM,TS'
-        discipline = 'T'
+        if i[0].split('/')[5] == 'Man':
+            gender_code = 'M'
+        elif i[0].split('/')[5] == 'Woman':
+            gender_code = 'W'
+        else:
+            gender_code = 'A'
 
-    if i[0].split('/')[5] == 'Man':
-        gender_code = 'M'
-    elif i[0].split('/')[5] == 'Woman':
-        gender_code = 'W'
-    else:
-        gender_code = 'A'
+        link_to_season = (f'https://www.fis-ski.com/DB/general/statistics.html?statistictype=positions&positionstype='
+                          f'position&offset=50&sectorcode=JP&seasoncode={season_code}&'
+                          f'categorycode={competition_category}'
+                          f'&gendercode={gender_code}&competitornationcode=&place=&nationcode=&position=4&'
+                          f'disciplinecode={discipline_code}')
 
-    link_to_season = (f'https://www.fis-ski.com/DB/general/statistics.html?statistictype=positions&positionstype='
-                      f'position&offset=50&sectorcode=JP&seasoncode={season_code}&'
-                      f'categorycode={competition_category}'
-                      f'&gendercode={gender_code}&competitornationcode=&place=&nationcode=&position=4&'
-                      f'disciplinecode={discipline_code}')
+        # selenium
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-    driver.get(link_to_season)
-    table = driver.find_elements(By.CLASS_NAME, "split-row__item")
+        driver.get(link_to_season)
+        table = driver.find_elements(By.CLASS_NAME, "split-row__item")
 
-    competitions_list = []
-    for code in table:
-        comp_type = code.text
-        if comp_type in gender_code:
-            continue
-        competitions_list.append(comp_type)
+        competitions_list = []
+        for code in table:
+            comp_type = code.text
+            if comp_type in gender_code:
+                continue
+            competitions_list.append(comp_type)
 
-    competition_count = len(competitions_list)
-    web_count = (f'{gender_code}_{competition_category}_{discipline}_{season_code}', competition_count)
+        competition_count = len(competitions_list)
+        web_count = (f'{gender_code}_{competition_category}_{discipline}_{season_code}', competition_count)
 
-    db_web_count.append((i, web_count))
+        db_web_count.append((i, web_count))
+
+    return db_web_count
+
+
+db_web_data = get_db_web_data(db_count_competition_single_season(path, seasons))

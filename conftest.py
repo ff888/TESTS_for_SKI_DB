@@ -1,6 +1,6 @@
 import pytest
 
-from data_engine import path_to_all_csv_files, db_web_count
+from data_engine import path_to_all_csv_files, db_web_data
 
 
 ########################################################################################################################
@@ -172,7 +172,7 @@ def wind_columns(data_without_headers):
 ########################################################################################################################
 
 
-@pytest.fixture(params=db_web_count)
+@pytest.fixture(params=db_web_data)
 def db_and_web_competition_data(request):
     """Returns list of tuples where it holds 2 tuples:
         1. (path to the season, number of compilations),
