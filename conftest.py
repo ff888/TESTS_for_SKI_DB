@@ -1,6 +1,6 @@
 import pytest
 
-from data_engine import path_to_all_csv_files, db_web_data
+from data_for_tests.data_engine import *
 
 
 ########################################################################################################################
@@ -180,3 +180,15 @@ def db_and_web_competition_data(request):
     """
     single_db_web_tuple = request.param
     return single_db_web_tuple
+
+
+@pytest.fixture(params=jumpers_count)
+def db_and_web_jumpers_count(request):
+    """Returns tuple with three integers:
+    1. codex number to find competition
+    2. number of jumpers pulled from web (giving competition)
+    3. number of jumpers pulled from db file of giving competition
+    """
+    data = request.param
+    return data
+
