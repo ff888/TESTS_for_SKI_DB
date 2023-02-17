@@ -1,6 +1,8 @@
 import pytest
 
-from data_for_tests.data_engine import *
+from data_for_tests.path_to_all_db_files import csv_files_list
+from data_for_tests.sesons_data import db_web_data
+from data_for_tests.competition_data import web_db_data
 
 
 ########################################################################################################################
@@ -12,7 +14,7 @@ from data_for_tests.data_engine import *
 ########################################################################################################################
 
 
-@pytest.fixture(params=path_to_all_csv_files)
+@pytest.fixture(params=csv_files_list)
 def csv_data(request):
     """All file elements - all columns"""
     with open(request.param) as f:
