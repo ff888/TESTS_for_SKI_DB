@@ -1,8 +1,8 @@
 import pytest
 
-from data_for_tests.path_to_all_db_files import csv_files_list
 from data_for_tests.sesons_data import db_web_data
-from data_for_tests.competition_data import web_db_data
+from data_for_tests.competition_data import jumpers_count
+from path_to_all_db_files import csv_files_list
 
 
 ########################################################################################################################

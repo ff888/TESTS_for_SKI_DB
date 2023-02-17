@@ -1,4 +1,5 @@
-# tests
+# tests to verify each element of the table
+
 def test_headers_upper(headers_from_csv_file):
     """Test if column names in header are uppercase"""
     header = headers_from_csv_file
