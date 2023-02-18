@@ -47,7 +47,7 @@ def web_db_data(db_files_path_list):
         ranking = driver.find_elements(By.CSS_SELECTOR, '#events-info-results > div > a:nth-child(1) > div > div > '
                                                         'div.g-lg-1.g-md-1.g-sm-1.g-xs-2.justify-right.pr-1.bold')
 
-        names = driver.find_elements(By.XPATH, 'names')
+        names = driver.find_elements(By.CLASS_NAME, 'table-row')
 
         nationality = driver.find_elements(By.CLASS_NAME, 'country__name-short')
         nationality_web_list = [item.text for item in nationality if item.text != '']
