@@ -2,8 +2,7 @@ Tests for Ski Jumping Database (pytest + selenium) #
 
  **Description:**
 
- The purpose of tests here is to check if fails created by SKI-JUMPING-DATABASE-PROJECT engine holds valid data.
- The structure of DB and file is described in SKI-JUMPING README file.
+ These tests check if files in SKI-JUMPING-DATABASE-PROJECT hold valid data. The structure of DB and files are described in detail in the SKI-JUMPING README file.
 
  **List of file tests:**
  1. test_headers_upper --> Test if first line of the files is line with HEADERS

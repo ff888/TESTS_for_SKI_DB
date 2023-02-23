@@ -14,8 +14,8 @@ def test_number_of_competition_in_single_season(db_and_web_competition_data):
 def test_compare_number_of_jumpers(db_and_web_jumpers_count):
     """Test: compare number of jumpers in the file and fis-web, have to be the same number"""
     codex = db_and_web_jumpers_count[0]
-    db_count = db_and_web_jumpers_count[1]
-    web_count = db_and_web_jumpers_count[2]
+    db_count = db_and_web_jumpers_count[1][-1]
+    web_count = db_and_web_jumpers_count[2][-1]
 
     err = []
     if db_count != web_count:

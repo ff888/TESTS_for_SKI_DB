@@ -1,7 +1,7 @@
 import pytest
 
 from data_for_tests.sesons_data import db_web_data
-from data_for_tests.competition_data import jumpers_count
+from data_for_tests.competition_data import db_web_rankings
 from path_to_all_db_files import csv_files_list
 
 
@@ -176,15 +176,15 @@ def wind_columns(data_without_headers):
 
 @pytest.fixture(params=db_web_data)
 def db_and_web_competition_data(request):
-    """Returns list of tuples where it holds 2 tuples:
+    """Returns list of 2 tuples::
         1. (path to the season, number of compilations),
-        2. (link to season, number of compilations
+        2. (link to season, number of compilations)
     """
     single_db_web_tuple = request.param
     return single_db_web_tuple
 
 
-@pytest.fixture(params=jumpers_count)
+@pytest.fixture(params=db_web_rankings)
 def db_and_web_jumpers_count(request):
     """Returns tuple with three integers:
     1. codex number to find competition
