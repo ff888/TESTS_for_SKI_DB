@@ -1,4 +1,4 @@
-import os
+
 import pandas as pd
 
 from selenium import webdriver
@@ -6,8 +6,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-
-from path_to_all_db_files import csv_files_list
 
 
 # ---------------------------------------->>> CREATE SELENIUM WEBDRIVER <<<------------------------------------------- #
@@ -54,7 +52,6 @@ def data_to_compare(web_data, column):
     for items in web_data:
         web_ranking = []
         web_name = []
-        web_nationality = []
 
         file_path = items[0]
         for item in items[1]:
@@ -66,7 +63,6 @@ def data_to_compare(web_data, column):
 
             name = item.split('\n')[3]
             web_name.append(name)
-
 
         df = pd.read_csv(file_path)
 
