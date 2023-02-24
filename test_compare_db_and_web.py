@@ -1,7 +1,7 @@
 # tests to verify if information in SKI-DB and FIS-WEB are the same
 
 def test_number_of_competition_in_single_season(db_and_web_competition_data):
-    """Test if number of competitions in the season are the same in DB and fis-web"""
+    """Test: compare the number of competitions in the giving season in SKI-DB and FIS-WEB if equal PASS."""
     db_count = db_and_web_competition_data[0][1]
     web_count = db_and_web_competition_data[1][1]
 
@@ -12,27 +12,24 @@ def test_number_of_competition_in_single_season(db_and_web_competition_data):
 
 
 def test_compare_number_of_jumpers(db_and_web_jumpers_count):
-    """Test: compare number of jumpers in the file and fis-web, have to be the same number"""
+    """Test: compare the number of jumpers that take part in the given competition in web and db, if equal PASS."""
     codex = db_and_web_jumpers_count[0]
-    db_count = db_and_web_jumpers_count[1][-1]
-    web_count = db_and_web_jumpers_count[2][-1]
+    web_count = db_and_web_jumpers_count[1][0][-1]
+    db_count = db_and_web_jumpers_count[1][1][-1]
 
     err = []
     if db_count != web_count:
-        err.append(f'db({db_count}) != web({web_count}) | codex: {codex}')
+        err.append(f'codex: {codex} | web({web_count}) != db({db_count})')
     assert not err
 
 
-def test_compare_names():
-    """Test if names are the same in the fis-web and the file."""
-    pass
+def test_compare_names(db_and_web_name):
+    """Test: compare lists of jumpers' names for given competition in the fis-web and ski-db, if equal PASS."""
+    codex = db_and_web_name[0]
+    web_names = db_and_web_name[1][0]
+    db_names = db_and_web_name[1][1]
 
-
-def test_compare_nationality():
-    """Test if nationality are the same in the fis-web and the file."""
-    pass
-
-
-def test_compare_points():
-    """Test if points in fis-web are the same as points in file"""
-    pass
+    err = []
+    if db_names != web_names:
+        err.append(f'codex: {codex} | web({len(web_names)}) != db({len(db_names)}')
+    assert not err

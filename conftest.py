@@ -1,8 +1,10 @@
 import pytest
 
 from data_for_tests.sesons_data import db_web_data
-from data_for_tests.competition_data import db_web_rankings
+from data_for_tests.competition_data import pull_web_table, data_to_compare
 from path_to_all_db_files import csv_files_list
+
+web_table_data = pull_web_table(csv_files_list)
 
 
 ########################################################################################################################
@@ -36,7 +38,7 @@ def data_without_headers(csv_data):
 
 @pytest.fixture()
 def judge_marks(data_without_headers):
-    """Return list with values from 10 judge data columns only (no NULL value)"""
+    """Return 10 columns contain judge marks values (no NULL value)"""
     judge_marks_list = []
     for line in data_without_headers:
         judge_marks_1 = line.split(',')[8:13]
@@ -74,7 +76,7 @@ def rankings(data_without_headers):
 
 @pytest.fixture()
 def judge_total_points_columns(data_without_headers):
-    """Return list with values from 2 columns  [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
+    """Return list with values from 2 columns [JUDGE TOTAL POINTS JUMP 1, JUDGE TOTAL POINTS JUMP 2]"""
 
     judge_points_list = []
     for line in data_without_headers:
@@ -184,7 +186,7 @@ def db_and_web_competition_data(request):
     return single_db_web_tuple
 
 
-@pytest.fixture(params=db_web_rankings)
+@pytest.fixture(params=(data_to_compare(web_table_data, 'ranking')))
 def db_and_web_jumpers_count(request):
     """Returns tuple with three integers:
     1. codex number to find competition
@@ -194,3 +196,9 @@ def db_and_web_jumpers_count(request):
     data = request.param
     return data
 
+
+@pytest.fixture(params=(data_to_compare(web_table_data, 'name')))
+def db_and_web_name(request):
+    """Returns tuple with (path to file (str), [list of names from web table (list), list of names from file])"""
+    data = request.param
+    return data
