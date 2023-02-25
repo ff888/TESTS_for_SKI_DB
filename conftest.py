@@ -4,6 +4,7 @@ from data_for_tests.sesons_data import db_web_data
 from data_for_tests.competition_data import pull_web_table, data_to_compare
 from path_to_all_db_files import csv_files_list
 
+
 web_table_data = pull_web_table(csv_files_list)
 
 
@@ -193,12 +194,10 @@ def db_and_web_jumpers_count(request):
     2. number of jumpers pulled from web (giving competition)
     3. number of jumpers pulled from db file of giving competition
     """
-    data = request.param
-    return data
+    return request.param
 
 
 @pytest.fixture(params=(data_to_compare(web_table_data, 'name')))
 def db_and_web_name(request):
     """Returns tuple with (path to file (str), [list of names from web table (list), list of names from file])"""
-    data = request.param
-    return data
+    return request.param

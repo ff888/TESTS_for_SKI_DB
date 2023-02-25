@@ -1,4 +1,4 @@
-
+import os
 import pandas as pd
 
 from selenium import webdriver
@@ -24,7 +24,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 
 
 def pull_web_table(db_files_path_list):
-    """Pulls information from fis-web about a single competition (rows from table) -> data needs to be maintained after
+    """Pulls information from fis-web about a single competition (rows from table) -> data needs to be maintained after.
     Returns list[codex, [table row, table row, ...]"""
     web_information = []
     for file in db_files_path_list:
@@ -43,7 +43,7 @@ def pull_web_table(db_files_path_list):
 
 
 def data_to_compare(web_data, column):
-    """
+    """Returns formatted data pulled from fis-web.
     :param web_data: list(str(file_path), [jumper data rows from web table])
     :param column: column name to compare -> 'ranking' or 'name' or 'nationality'
     :return: list(list(str(file_path), [[web column], [db column]])
@@ -55,7 +55,22 @@ def data_to_compare(web_data, column):
 
         file_path = items[0]
         for item in items[1]:
-            if '  DSQ' in item:
+            # skip disqualified jumpers
+            if 'DSQ' in item.split('\n'):
+                # print('skip disqualified jumpers - list contains DSQ', item.split('\n'))
+                continue
+            if item.split('\n')[-1] == ' ':
+                # print('skip disqualified jumpers: ', item.split('\n'))
+                continue
+            # skip - did not start - jumpers
+            if item.split('\n')[-1].isalpha()\
+                    and len(item.split('\n')[-1])\
+                    and item.split('\n')[-1].isupper():
+                # print('skip - did not start - jumpers last element is NATIONALITY', item.split('\n'))
+                continue
+            # only one element in the list - invalid
+            if len(item.split('\n')) == 1:
+                # print('Only 1 element in the list: ', item.split('\n'))
                 continue
 
             ranking = item.split('\n')[0]
@@ -64,6 +79,10 @@ def data_to_compare(web_data, column):
             name = item.split('\n')[3]
             web_name.append(name)
 
+        # skip if file path is invalid
+        if file_path == '/':
+            continue
+
         df = pd.read_csv(file_path)
 
         db_ranking = list(df['RANKING'])
@@ -71,7 +90,6 @@ def data_to_compare(web_data, column):
 
         db_name = list(df['NAME'])
         db_name = [i.lower() for i in db_name]
-
         web_name = [i.lower() for i in web_name]
 
         if column == 'ranking':

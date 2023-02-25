@@ -2,8 +2,8 @@
 
 def test_number_of_competition_in_single_season(db_and_web_competition_data):
     """Test: compare the number of competitions in the giving season in SKI-DB and FIS-WEB if equal PASS."""
-    db_count = db_and_web_competition_data[0][1]
-    web_count = db_and_web_competition_data[1][1]
+    db_count = len(db_and_web_competition_data[0])
+    web_count = len(db_and_web_competition_data[1])
 
     err = []
     if db_count != web_count:
@@ -30,6 +30,6 @@ def test_compare_names(db_and_web_name):
     db_names = db_and_web_name[1][1]
 
     err = []
-    if db_names != web_names:
+    if db_names is web_names:
         err.append(f'codex: {codex} | web({len(web_names)}) != db({len(db_names)}')
     assert not err
