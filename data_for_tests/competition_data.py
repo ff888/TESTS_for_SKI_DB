@@ -55,15 +55,17 @@ def data_to_compare(web_data, column):
 
         file_path = items[0]
         for item in items[1]:
-
             # skip disqualified jumpers
             if 'DSQ' in item.split('\n'):
                 # print('skip disqualified jumpers - list contains DSQ', item.split('\n'))
                 continue
-            if len(item.split('\n')) == 9 and item.split('\n')[-2] == '  2' and item.split('\n')[-3] == '1':
-                continue
             if item.split('\n')[-1] == ' ':
                 # print('skip disqualified jumpers: ', item.split('\n'))
+                continue
+            # skip all jumpers if not qualified for the tournament
+            if len(item.split('\n')) == 9 \
+                    and item.split('\n')[-2] == '  2' \
+                    and item.split('\n')[-3] == '1':
                 continue
             # skip - did not start - jumpers
             if item.split('\n')[-1].isalpha()\

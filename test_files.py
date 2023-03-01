@@ -190,6 +190,9 @@ def test_gate_max_2_length(gate_columns):
     """Test if gate columns are max characters long"""
     err = []
     for gate in gate_columns:
+        # skip if gate changed by coach
+        if len(gate) == 5 and '/' in gate:
+            continue
         if len(gate) > 3:
             err.append(gate)
     assert not err
@@ -199,6 +202,9 @@ def test_gate_is_number(gate_columns):
     """Test if gate columns contain only numerical characters"""
     err = []
     for gate in gate_columns:
+        # skip if gate changed by coach
+        if len(gate) == 5 and '/' in gate:
+            continue
         if not gate.isnumeric():
             err.append(gate)
     assert not err
