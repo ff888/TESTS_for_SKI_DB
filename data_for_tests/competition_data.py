@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 
 from selenium import webdriver
@@ -7,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
+from path_to_all_db_files import csv_files_list
 
 # ---------------------------------------->>> CREATE SELENIUM WEBDRIVER <<<------------------------------------------- #
 chrome_options = Options()
@@ -55,23 +55,19 @@ def data_to_compare(web_data, column):
 
         file_path = items[0]
         for item in items[1]:
+            row_items = item.split('\n')
             # skip disqualified jumpers
-            if 'DSQ' in item.split('\n'):
+            if 'DSQ' in row_items:
                 # print('skip disqualified jumpers - list contains DSQ', item.split('\n'))
                 continue
-            if item.split('\n')[-1] == ' ':
+            if row_items[-1] == ' ':
                 # print('skip disqualified jumpers: ', item.split('\n'))
                 continue
             # skip all jumpers if not qualified for the tournament
-            if len(item.split('\n')) == 9 \
+            if len(row_items) == 9 \
                     and item.split('\n')[-2] == '  2' \
                     and item.split('\n')[-3] == '1':
-                continue
-            # skip - did not start - jumpers
-            if item.split('\n')[-1].isalpha()\
-                    and len(item.split('\n')[-1])\
-                    and item.split('\n')[-1].isupper():
-                # print('skip - did not start - jumpers last element is NATIONALITY', item.split('\n'))
+                # print('skip all jumpers if not qualified for the tournament', item.split('\n'))
                 continue
             # only one element in the list - invalid
             if len(item.split('\n')) == 1:
@@ -81,8 +77,11 @@ def data_to_compare(web_data, column):
             ranking = item.split('\n')[0]
             web_ranking.append(ranking)
 
-            name = item.split('\n')[3]
-            web_name.append(name)
+            # find only name data
+            for element in row_items:
+                if element.split()[0].isalpha() and element.split()[-1].isalpha() and len(element) > 3:
+                    name = element
+                    web_name.append(name)
 
         # skip if file path is invalid
         if file_path == '/':
@@ -91,11 +90,11 @@ def data_to_compare(web_data, column):
         df = pd.read_csv(file_path)
 
         db_ranking = list(df['RANKING'])
-        db_ranking = [str(i) for i in db_ranking]
+        db_ranking = [str(el) for el in db_ranking]
 
         db_name = list(df['NAME'])
-        db_name = [i.lower() for i in db_name]
-        web_name = [i.lower() for i in web_name]
+        # db_name = [el.lower() for el in db_name]
+        # web_name = [el.lower() for el in web_name]
 
         if column == 'ranking':
             compare_lists = [web_ranking, db_ranking]

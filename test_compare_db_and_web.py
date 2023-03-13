@@ -14,8 +14,8 @@ def test_number_of_competition_in_single_season(db_and_web_competition_data):
 def test_compare_number_of_jumpers(db_and_web_jumpers_count):
     """Test: compare the number of jumpers that take part in the given competition in web and db, if equal PASS."""
     codex = db_and_web_jumpers_count[0]
-    web_count = db_and_web_jumpers_count[1][0][-1]
-    db_count = db_and_web_jumpers_count[1][1][-1]
+    web_count = len(db_and_web_jumpers_count[1][0])
+    db_count = len(db_and_web_jumpers_count[1][1])
 
     err = []
     if db_count != web_count:
